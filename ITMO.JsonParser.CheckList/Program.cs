@@ -21,7 +21,7 @@ namespace ITMO.JsonParser.CheckList
             foreach (WPF_CheckListQuests.QuestItem item in questItems)
             {
                 Console.WriteLine(item.Description);
-           
+            
             }     
 
 
