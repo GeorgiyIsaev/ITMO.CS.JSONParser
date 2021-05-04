@@ -29,7 +29,10 @@ namespace WPF_CheckListQuests
 				PropertyChanged(this, new PropertyChangedEventArgs(property));
 			}
 		}
-
+        public QuestItem()
+        {
+			//пустой констрокутор для работы JSONсериализации
+		}
 
 		/*Части вопроса*/
 		public string quest { get; set; } = "";
@@ -123,14 +126,8 @@ namespace WPF_CheckListQuests
 				tmpAnswer.RandomAnswerIt();
 			}
 			/*Перетасовать ответы*/
-			answerItem.Sort((a,b)=> a.random_nomer.CompareTo(b.random_nomer));
-
-
-
-			
+			answerItem.Sort((a,b)=> a.random_nomer.CompareTo(b.random_nomer));			
 		}
-
-
 	}    
 }
 

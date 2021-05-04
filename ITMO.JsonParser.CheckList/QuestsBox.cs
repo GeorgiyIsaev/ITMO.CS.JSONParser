@@ -3,25 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
-using System.Windows.Xps.Serialization;
-
 
 namespace WPF_CheckListQuests
 {
     public static class QuestsBox
     {
-		/*Для тулбокса*/
-		//private static ObservableCollection<QuestItem> _models = new ObservableCollection<QuestItem>();
-		//public static ObservableCollection<QuestItem> Models
-		//{
-		//	get { return _models; }
-		//	set { _models = value; }
-		//}
-
-
-		//ObservableCollection;
-		//public static ObservableCollection
-		public static ObservableCollection<QuestItem> questItems = new ObservableCollection<QuestItem>();
+		public static List<QuestItem> questItems = new List<QuestItem>();
 		public static bool if_ThereQuest(string str)
 		{
 			while (true)
@@ -84,10 +71,7 @@ namespace WPF_CheckListQuests
 			foreach(string line in lineItem)
             {
 				try
-				{
-					//	string line = _line.Replace("\n", "");
-					//line = line.Replace("\r", "");
-
+				{		
 					if (line.IndexOf("ВОПРОС:") >= 0)
 					{
 						if (questItem != null) { 
@@ -118,7 +102,7 @@ namespace WPF_CheckListQuests
 				}
 				catch (Exception e)
 				{
-					System.Windows.MessageBox.Show(e.ToString());
+					//System.Windows.MessageBox.Show(e.ToString());
 					/*Просто игнорируем*/
 				}
             }
