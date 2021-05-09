@@ -16,7 +16,7 @@ namespace ITMO.JSON.TestCheckList
             //}
 
             //Тест JSON
-            //CheckList.JsonParser.WriteJSON();
+            CheckList.JsonParser.WriteJSON();
 
 
 
