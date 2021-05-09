@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Collections.ObjectModel;
+
+namespace CheckList
+{
+	public static class TXTParser
+	{
+		public static bool if_ThereQuest(string str)
+		{//проверка наличия квеста в коробке
+			while (true)
+			{
+				str = str.Replace("\r", " ");
+				str = str.Replace("\n", " ");
+				if (!str.Contains("\n")) break;
+			}
+			foreach (QuestItem tmp in QuestsBox.questItems)
+			{
+				if (tmp.quest == str) return true;
+			}
+			return false;
+		}
+		public static void file_saveTXT(string nameFile)
+		{
+			/*Запись вопросов в блакнот*/
+			using (var file = new StreamWriter(nameFile, false, Encoding.UTF8))
+			{
+				int count = 0;
+				foreach (QuestItem tmp in QuestsBox.questItems)
+				{
+					if (count == 0) { count++; continue; }// Пропуск вопроса настройки
+					file.WriteLine($"ВОПРОС: {tmp.quest}");
+					foreach (Answer tmpAnswer in tmp.answerItem)
+					{
+						if (tmpAnswer.if_true)
+							file.WriteLine($"ВЕРНО: {tmpAnswer.answerSTR}");
+						else
+							file.WriteLine($"НЕ ВЕРНО: {tmpAnswer.answerSTR}");
+					}
+					file.WriteLine($"КОММЕНТАРИЙ: {tmp.comment}");
+					//count++;
+				}
+			}
+		}
+
+
+		public static int file_readTXT(string nameFile)
+		{
+			string fullLine;
+			/*Чтение вопросов из блокнота*/
+
+			if (!System.IO.File.Exists(nameFile))
+			{
+				return 0;
+			}
+
+			using (var file = new StreamReader(nameFile, Encoding.Unicode))
+			{
+				fullLine = file.ReadToEnd();
+			}
+			return parsing_quest(fullLine);
+		}
+
+		private static int parsing_quest(string str)
+		{
+			string[] separator = { "\n", "\r" };
+			string[] lineItem = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+			QuestItem questItem = null;
+			int count = 0;
+
+			foreach (string line in lineItem)
+			{
+				try
+				{
+					if (line.IndexOf("ВОПРОС:") >= 0)
+					{
+						if (questItem != null)
+						{
+							//QuestsBox.questItems.EndlForSpase();
+							if (!if_ThereQuest(questItem.quest))
+							{								
+								QuestsBox.questItems.Add(questItem);
+								count++;
+							}
+						}
+						questItem = new QuestItem();
+						questItem.quest = line.Substring(line.LastIndexOf("ВОПРОС: ") + 8);
+					}
+					else if (line.IndexOf("ВЕРНО:") == 0)
+					{
+						Answer temp = new Answer(line.Substring(7), true);
+						questItem.answerItem.Add(temp);
+					}
+					else if (line.IndexOf("НЕ ВЕРНО:") == 0)
+					{
+						Answer temp = new Answer(line.Substring(10), false);
+						questItem.answerItem.Add(temp);
+					}
+					else if (line.IndexOf("КОММЕНТАРИЙ:") == 0)
+					{
+						questItem.comment = line.Substring(13);
+					}
+				}
+				catch (Exception e)
+				{
+					//System.Windows.MessageBox.Show(e.ToString());
+					/*Просто игнорируем*/
+				}
+			}
+			if (questItem != null)
+			{			
+				if (!if_ThereQuest(questItem.quest))
+				{					
+					QuestsBox.questItems.Add(questItem);
+					count++;
+				}
+			}
+			return count;
+		}
+		
+	}
+}
