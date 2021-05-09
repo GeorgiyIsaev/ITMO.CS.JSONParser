@@ -57,7 +57,7 @@ namespace CheckList
 		/*Части вопроса*/
 		public string quest { get; set; } = "";
 		public string comment { get; set; } = "";
-		public List<Answer> answerItem;
+		public List<Answer> answerItem { get; set; }
 	
 
 		/*Логика работы вопроса*/
