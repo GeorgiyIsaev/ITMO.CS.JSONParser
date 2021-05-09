@@ -8,12 +8,12 @@ namespace ITMO.JSON.TestCheckList
         static void Main(string[] args)
         {
             CheckList.TXTParser.file_readTXT("TEMPTXT.txt"); 
-            Console.WriteLine("Демонстрация");
-            foreach (CheckList.QuestItem item in CheckList.QuestsBox.questItems)
-            {
-                Console.WriteLine(item.ToString());
+            //Console.WriteLine("Демонстрация");
+            //foreach (CheckList.QuestItem item in CheckList.QuestsBox.questItems)
+            //{
+            //    Console.WriteLine(item.ToString());
 
-            }
+            //}
 
             //Тест JSON
             CheckList.JsonParser.WriteJSON();
