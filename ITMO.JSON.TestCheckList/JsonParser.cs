@@ -44,6 +44,7 @@ namespace CheckList
             };
             if (File.Exists("test.json"))
             {
+                //OpenOrCreate - использовать или ну его?
                 using (FileStream file = new FileStream("test.json", FileMode.Truncate))
                 {
                     JsonSerializer.SerializeAsync(file, QuestsBox.questItems, options);
@@ -54,12 +55,8 @@ namespace CheckList
                 using (FileStream file = new FileStream("test.json", FileMode.Create))
                 {
                     JsonSerializer.SerializeAsync(file, QuestsBox.questItems, options);
-                }
-                //string json = Encoding.UTF8.GetString(client.DownloadData(url));
+                }       
             }
-
         }
-
-
     }
 }

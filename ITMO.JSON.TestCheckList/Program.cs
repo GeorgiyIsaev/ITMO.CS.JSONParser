@@ -7,7 +7,7 @@ namespace ITMO.JSON.TestCheckList
     {
         static void Main(string[] args)
         {
-            CheckList.TXTParser.file_readTXT("TEMPTXT.txt"); 
+            CheckList.TXTParser.file_readTXT("TEMPTXT.txt");
             //Console.WriteLine("Демонстрация");
             //foreach (CheckList.QuestItem item in CheckList.QuestsBox.questItems)
             //{
@@ -16,7 +16,7 @@ namespace ITMO.JSON.TestCheckList
             //}
 
             //Тест JSON
-            CheckList.JsonParser.WriteJSON();
+            //CheckList.JsonParser.WriteJSON();
 
 
 
@@ -25,7 +25,7 @@ namespace ITMO.JSON.TestCheckList
                 = new List<CheckList.QuestItem>();
             CheckList.JsonParser.ReadJSON(ref questItems);
 
-            Console.WriteLine("Демонстрация");
+            Console.WriteLine("\n\nДемонстрация");
             foreach (CheckList.QuestItem item in questItems)
             {
                 Console.WriteLine(item.ToString());
