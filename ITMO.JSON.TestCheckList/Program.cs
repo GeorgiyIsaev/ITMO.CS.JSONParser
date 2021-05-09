@@ -23,7 +23,7 @@ namespace ITMO.JSON.TestCheckList
 
             List<CheckList.QuestItem> questItems
                 = new List<CheckList.QuestItem>();
-            CheckList.JsonParser.ReadJSON(questItems);
+            CheckList.JsonParser.ReadJSON(ref questItems);
 
             Console.WriteLine("Демонстрация");
             foreach (CheckList.QuestItem item in questItems)

@@ -16,11 +16,18 @@ namespace CheckList
     {
       
 
-        public static void ReadJSON(List<QuestItem> questItems)
+        public static void ReadJSON(ref List<QuestItem> questItems)
         {
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true, // Если равно true устанавливаются дополнительные пробелы и переносы (для красоты)
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) //Вот эта строка Вам поможет с кодировкой
+            }; 
             using (FileStream fs = new FileStream("test.json", FileMode.Open))
             {         
-                questItems = JsonSerializer.DeserializeAsync<List<QuestItem>>(fs).Result;
+                questItems = JsonSerializer.DeserializeAsync<List<QuestItem>>(fs, options).Result;
+                //Person restoredPerson = await JsonSerializer.DeserializeAsync<Person>(fs);
+                int a=0;
             }
         }
         static public void WriteJSON()

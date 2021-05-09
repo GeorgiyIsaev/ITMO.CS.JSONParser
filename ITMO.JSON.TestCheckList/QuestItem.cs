@@ -4,7 +4,8 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CheckList
 {
@@ -17,7 +18,8 @@ namespace CheckList
 		
 		public bool if_true { get => ifTrue; set => ifTrue = value; } // 1-Верный ответ, 0-Не верный ответ.
         public string answerSTR { get => answer; set => answer = value; }
-        public int random_nomer { get; set; } = 0;
+		[JsonIgnore]
+		public int random_nomer { get; set; } = 0;
 
 		public Answer()
 		{
@@ -55,9 +57,7 @@ namespace CheckList
 		public string quest { get; set; } = "";
 		public string comment { get; set; } = "";
 		public List<Answer> answerItem = new List<Answer>();
-
-		public int intRandomQuest { get; set; } = 0;
-		public int countTrueAnswer{ get; set; } = 0;
+	
 
 		/*Логика работы вопроса*/
 		/*Добавление верные и не верных ответов в лист*/
@@ -100,20 +100,7 @@ namespace CheckList
 				}
 			}
 			return tempSTR.ToString();
-        }
-
-		public void RandomGeneratorIt()
-        {
-			Random rnd = new Random();
-			intRandomQuest = rnd.Next(0, 100);
-			foreach (Answer tmpAnswer in answerItem)
-			{
-				if(tmpAnswer.if_true) countTrueAnswer++;
-				tmpAnswer.RandomAnswerIt();
-			}
-			/*Перетасовать ответы*/
-			answerItem.Sort((a,b)=> a.random_nomer.CompareTo(b.random_nomer));			
-		}
+        }	
 	}    
 }
 
