@@ -50,13 +50,14 @@ namespace CheckList
 	{ 
         public QuestItem()
         {
+			answerItem = new List<Answer>();
 			//пустой констрокутор для работы JSONсериализации
 		}
 
 		/*Части вопроса*/
 		public string quest { get; set; } = "";
 		public string comment { get; set; } = "";
-		public List<Answer> answerItem = new List<Answer>();
+		public List<Answer> answerItem;
 	
 
 		/*Логика работы вопроса*/
