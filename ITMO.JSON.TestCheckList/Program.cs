@@ -6,7 +6,14 @@ namespace ITMO.JSON.TestCheckList
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            CheckList.TXTParser.file_readTXT("TEMPTXT.txt");   
+
+            Console.WriteLine("Демонстрация");
+            foreach (CheckList.QuestItem item in CheckList.QuestsBox.questItems)
+            {
+                Console.WriteLine(item.ToString());
+
+            }
         }
     }
 }

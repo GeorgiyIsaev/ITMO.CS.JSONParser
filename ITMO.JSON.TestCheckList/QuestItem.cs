@@ -15,7 +15,7 @@ namespace CheckList
 		string answer;
 		bool ifTrue;		
 		
-		public bool if_true { get => ifTrue; set => if_true = value; } // 1-Верный ответ, 0-Не верный ответ.
+		public bool if_true { get => ifTrue; set => ifTrue = value; } // 1-Верный ответ, 0-Не верный ответ.
         public string answerSTR { get => answer; set => answer = value; }
         public int random_nomer { get; set; } = 0;
 
@@ -76,7 +76,7 @@ namespace CheckList
 				Answer temp = new Answer(tmp, false);
 				answerItem.Add(temp);
 			}
-			EndlForSpase();
+			//EndlForSpase();
 		}
 		public override string ToString()
 		{
