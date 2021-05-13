@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITMO.JSON.Test01.MyProjectCheckList", "ITMO.JSON.Test01.MyProjectCheckList\ITMO.JSON.Test01.MyProjectCheckList.csproj", "{79046651-47A7-4A4E-8813-B73E0E98DE31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITMO.JSON.Test02.MyTestCheckList", "ITMO.JSON.Test02.MyTestJsonCheckList\ITMO.JSON.Test02.MyTestCheckList.csproj", "{3C6429E4-07C0-47FA-BD77-54F416715810}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITMO.JSON.Test02.MyTestJsonCheckList", "ITMO.JSON.Test02.MyTestJsonCheckList\ITMO.JSON.Test02.MyTestJsonCheckList.csproj", "{3C6429E4-07C0-47FA-BD77-54F416715810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMO.JSON.MyParser", "ITMO.JSON.Test03.MyParser\ITMO.JSON.MyParser.csproj", "{22A99B98-1E98-49AE-BECD-E814640FAC7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMO.JSON.Test03.MyParser", "ITMO.JSON.Test03.MyParser\ITMO.JSON.Test03.MyParser.csproj", "{22A99B98-1E98-49AE-BECD-E814640FAC7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
