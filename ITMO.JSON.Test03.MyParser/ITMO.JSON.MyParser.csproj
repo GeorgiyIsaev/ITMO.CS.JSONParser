@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BADFA25C-CC47-443F-9AFD-81C3DCDEC36A}</ProjectGuid>
+    <ProjectGuid>{22A99B98-1E98-49AE-BECD-E814640FAC7F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ITMO.JSONParser</RootNamespace>
-    <AssemblyName>ITMO.JSONParser</AssemblyName>
+    <RootNamespace>ITMO.JSON.MyParser</RootNamespace>
+    <AssemblyName>ITMO.JSON.MyParser</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,12 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answer.cs" />
-    <Compile Include="JsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuestItem.cs" />
-    <Compile Include="QuestsBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

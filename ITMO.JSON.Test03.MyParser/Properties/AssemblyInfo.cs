@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные с этой сборкой.
-[assembly: AssemblyTitle("ITMO.JSONParser")]
+[assembly: AssemblyTitle("ITMO.JSON.MyParser")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ITMO.JSONParser")]
+[assembly: AssemblyProduct("ITMO.JSON.MyParser")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID представляет идентификатор typelib, если этот проект доступен из модели COM
-[assembly: Guid("badfa25c-cc47-443f-9afd-81c3dcdec36a")]
+[assembly: Guid("22a99b98-1e98-49ae-becd-e814640fac7f")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //
