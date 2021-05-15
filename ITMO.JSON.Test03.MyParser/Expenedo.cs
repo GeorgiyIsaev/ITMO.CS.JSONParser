@@ -50,7 +50,27 @@ namespace ITMO.JSON.MyParser
                 _properties[key] = value;
             }
         }
-
+        public override string ToString()
+        {
+            string temp = "";
+            foreach (var val in _properties)
+            {               
+                
+                temp += $"[{val.Key} : ";
+                if (val.Value.GetType().ToString() == typeof(List<dynamic>).ToString())
+                {
+                    temp += $"\n";
+                    foreach (var value in (List<dynamic>)val.Value)
+                    {
+                        temp += $"[[{value.ToString()}]],";
+                    }
+                }                
+                else
+                    temp += $"{val.Value.ToString()}]\n";
+            }        
+            return temp;
+        }
+  
 
 
         int ICollection<KeyValuePair<string, object>>.Count

@@ -32,17 +32,17 @@ namespace ITMO.JSON.MyParser
                         dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
                     }
                     listDynamic.Add(dynamicObj);
+                    Console.WriteLine(dynamicObj.ToString());
                     dictionary = new Dictionary<string, object>();
                 }
                 dictionary.Add(element.Key, element.Value);
-                elementGlobal.RemoveAt(0);
+                if(elementGlobal.Count > 0)
+                    elementGlobal.RemoveAt(0);
             }
             foreach (var val in dictionary)
             {
                 Console.WriteLine(val.Key + " - " + val.Value);
-            }
-
-            List<dynamic> listDynamic = new List<dynamic>();
+            }            
             return listDynamic;
         }
         private static KeyValuePair<string, object> ElementPara(List<string> elementGlobal)

@@ -14,9 +14,14 @@ namespace ITMO.JSON.MyParser
         {
             List<dynamic> list = MyJsonParser.JsonParser("test.json");
 
-     
-
-
+            int i = 0;
+            Console.WriteLine($"Мои элементы:");
+            foreach (var val in list)
+            {
+                Console.WriteLine($"Елемент {i++}");
+                Console.WriteLine($"{val}");
+            }
+            Console.ReadKey();
 
         }
         static void MyTest()
