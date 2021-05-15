@@ -12,8 +12,13 @@ namespace ITMO.JSON.MyParser
     {
         static void Main(string[] args)
         {
+            dynamic obj = MyJsonParser.JsonParser("test.json");
 
 
+
+        }
+        static void MyTest()
+        {
             dynamic obj = new Expando()
             {
                 { "foo", "hello" },
@@ -22,8 +27,7 @@ namespace ITMO.JSON.MyParser
             };
             int value = obj.bar;
             Console.WriteLine(value);
+        }
 
-
-        }   
     }   
 }
