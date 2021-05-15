@@ -12,33 +12,50 @@ namespace ITMO.JSON.MyParser
 
         public static List<dynamic> JsonParser(string namefile)
         {
+            fulltext = DeleteSpace(fulltext);
             string fulltext = ReadFile(namefile);
-            List<string> elementGlobal = new List<string>();
+            List<string> elementGlobal = Parse(fulltext);
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             while (elementGlobal.Count >0)
             {
                 AddDictionary(elementGlobal[0], ref dictionary);
                 elementGlobal.RemoveAt(0);
             }
-           
+            foreach (var val in dictionary)
+            {
+                Console.WriteLine(val.Key + " - " + val.Value);
+            }
 
             List<dynamic> listDynamic = new List<dynamic>();
             return listDynamic;
         }
         private static void AddDictionary(string elementGlobal, ref Dictionary<string, object> dictionary)
         {
-            string temp = "";          
-            temp = elementGlobal.Remove(0, elementGlobal.IndexOf("\""));                   
+            string temp = "";
+            Object val;
+            temp = elementGlobal.Remove(0, elementGlobal.IndexOf("\"")+1);                   
             string key = temp.Substring(0, temp.IndexOf("\""));
-            temp = temp.Remove(0, temp.IndexOf(":"));
-            if (IfEndElement(temp))
+            temp = temp.Remove(0, temp.IndexOf(":")+2);
+            if (IfNewInnerElement(temp))
+            {
+                Dictionary<string, object> dictionaryTemp = new Dictionary<string, object>();
+                AddDictionary(elementGlobal, ref dictionaryTemp);
+                val = dictionarytemp; 
+            }
+            else if (IfEndElement(temp))
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
             }
-
-            Object val = temp;
-
-
+            if (temp.Contains('\"'))
+            {
+                val = temp.Substring(1, temp.LastIndexOf("\"") - 1); ;
+            }
+            else if (temp == "true") val = true;
+            else if (temp == "false") val = false;            
+            else
+            {
+                val = (object)temp;
+            }
 
             dictionary.Add(key, val);
         }
@@ -71,8 +88,7 @@ namespace ITMO.JSON.MyParser
         }
 
         private static List<string> Parse(string fulltext)
-        {
-            fulltext = DeleteSpace(fulltext);
+        {            
             string[] separator = { ","};
             string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
           

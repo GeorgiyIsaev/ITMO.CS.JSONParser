@@ -1,0 +1,4 @@
+Проверка строки на число!
+int res;
+bool isInt = Int32.TryParse("ляляля", out res);
+
