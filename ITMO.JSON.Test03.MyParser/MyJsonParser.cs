@@ -16,14 +16,24 @@ namespace ITMO.JSON.MyParser
         {      
             string fulltext = ReadFile(namefile);
             fulltext = DeleteSpace(fulltext);
+            List<string> elementGlobal = Parse(fulltext);
 
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            // AddDictionary(fulltext, ref dictionary);
-
-            List<string> elementGlobal = Parse(fulltext);
+            List<dynamic> listDynamic = new List<dynamic>();
+          
             while (elementGlobal.Count > 0)
-            {
-                KeyValuePair<string, object> element = ElementPara(elementGlobal);
+            {              
+                KeyValuePair<string, object> element = ElementPara(elementGlobal);                
+                if (dictionary.ContainsKey(element.Key))
+                {
+                    dynamic dynamicObj = new Expando();
+                    foreach (var valueDictionary in dictionary)
+                    {
+                        dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
+                    }
+                    listDynamic.Add(dynamicObj);
+                    dictionary = new Dictionary<string, object>();
+                }
                 dictionary.Add(element.Key, element.Value);
                 elementGlobal.RemoveAt(0);
             }
