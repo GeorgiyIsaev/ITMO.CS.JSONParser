@@ -13,34 +13,48 @@ namespace ITMO.JSON.MyParser
         public static List<dynamic> JsonParser(string namefile)
         {
             string fulltext = ReadFile(namefile);
-            string[] elementGlobal = Parse(fulltext);
-            List<dynamic> list = new List<dynamic>();         
-            list.Add(JsonParserElement());
+            List<string> elementGlobal = new List<string>();
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            while (elementGlobal.Count >0)
+            {
+                AddDictionary(elementGlobal[0], ref dictionary);
+                elementGlobal.RemoveAt(0);
+            }
+           
+
+            List<dynamic> listDynamic = new List<dynamic>();
+            return listDynamic;
+        }
+        private static void AddDictionary(string elementGlobal, ref Dictionary<string, object> dictionary)
+        {
+            string temp = "";          
+            temp = elementGlobal.Remove(0, elementGlobal.IndexOf("\""));                   
+            string key = temp.Substring(0, temp.IndexOf("\""));
+            temp = temp.Remove(0, temp.IndexOf(":"));
+            if (IfEndElement(temp))
+            {
+                temp = temp.Substring(0, temp.IndexOf("}"));
+            }
+
+            Object val = temp;
 
 
-            return list;
+
+            dictionary.Add(key, val);
         }
 
 
-        public static Expando JsonParserElement()
-        {
-            string fulltext = ReadFile(namefile);
-            string[] elementGlobal = Parse(fulltext);
 
-         
 
+        public static Expando JsonParserElement(string elementGlobal)
+        {                    
+          
             dynamic obj = new Expando()
             {
                 { "foo", "hello" },
                 { "bar", 42 },
                 { "baz", new object() }
-            };
-
-
-            List<dynamic> list = new List<dynamic>();
-            list.Add(obj);
-            
-        
+            };        
             return obj;
         }
 
@@ -56,13 +70,17 @@ namespace ITMO.JSON.MyParser
             return fulltext;
         }
 
-        private static string[] Parse(string fulltext)
+        private static List<string> Parse(string fulltext)
         {
             fulltext = DeleteSpace(fulltext);
             string[] separator = { ","};
             string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+          
+            List<string> list = new List<string>();
+            foreach (var i in elementGlobal)
+                list.Add(i);
 
-            return elementGlobal;
+            return list;
         }
         private static string DeleteSpace(string fulltext)
         {
