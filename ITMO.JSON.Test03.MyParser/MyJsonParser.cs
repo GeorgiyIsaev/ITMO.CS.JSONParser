@@ -9,16 +9,22 @@ namespace ITMO.JSON.MyParser
 {
     public static class MyJsonParser
     {
+       
+
 
         public static List<dynamic> JsonParser(string namefile)
-        {
-            fulltext = DeleteSpace(fulltext);
+        {      
             string fulltext = ReadFile(namefile);
-            List<string> elementGlobal = Parse(fulltext);
+            fulltext = DeleteSpace(fulltext);
+
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            while (elementGlobal.Count >0)
+            // AddDictionary(fulltext, ref dictionary);
+
+            List<string> elementGlobal = Parse(fulltext);
+            while (elementGlobal.Count > 0)
             {
-                AddDictionary(elementGlobal[0], ref dictionary);
+                KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                dictionary.Add(element.Key, element.Value);
                 elementGlobal.RemoveAt(0);
             }
             foreach (var val in dictionary)
@@ -29,22 +35,68 @@ namespace ITMO.JSON.MyParser
             List<dynamic> listDynamic = new List<dynamic>();
             return listDynamic;
         }
-        private static void AddDictionary(string elementGlobal, ref Dictionary<string, object> dictionary)
+        private static KeyValuePair<string, object> ElementPara(List<string> elementGlobal)
         {
             string temp = "";
             Object val;
-            temp = elementGlobal.Remove(0, elementGlobal.IndexOf("\"")+1);                   
+            KeyValuePair<string, object> myPair;
+
+
+            temp = elementGlobal[0].Remove(0, elementGlobal[0].IndexOf("\"") + 1);
             string key = temp.Substring(0, temp.IndexOf("\""));
-            temp = temp.Remove(0, temp.IndexOf(":")+2);
-            if (IfNewInnerElement(temp))
+            temp = temp.Remove(0, temp.IndexOf(":") + 2);
+            if (temp.Contains('['))
             {
-                Dictionary<string, object> dictionaryTemp = new Dictionary<string, object>();
-                AddDictionary(elementGlobal, ref dictionaryTemp);
-                val = dictionarytemp; 
+                elementGlobal[0] = temp;
+                List<dynamic> listDynamics = new List<dynamic>();
+                while ("}]" != elementGlobal[0])
+                {
+                    Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
+                    while ("}" != elementGlobal[0])
+                    {                                             
+                        KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                        dictionaryInner.Add(element.Key, element.Value);
+                        if ("}]" == elementGlobal[0])
+                        {                           
+                            break;
+                        }
+                        else if("}" == elementGlobal[0])
+                        {
+                            elementGlobal.RemoveAt(0);
+                            break;
+                        }
+                        elementGlobal.RemoveAt(0);
+                    } 
+                    dynamic dynamicObj = new Expando();
+                    foreach (var valueDictionary in dictionaryInner)
+                    {
+                        dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
+                    }
+                    listDynamics.Add(dynamicObj);
+                    if ("}]" == elementGlobal[0])
+                    {
+                        elementGlobal.RemoveAt(0);
+                        break;
+                    }
+                }                
+                val = listDynamics;
+                myPair = new KeyValuePair<string, object>(key, val);
+                return myPair;
             }
-            else if (IfEndElement(temp))
+            else if (temp.Contains("}]"))
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
+                elementGlobal[0] = "}]";
+            }
+            else if (temp.Contains("} ]"))
+            {
+                temp = temp.Substring(0, temp.IndexOf("}"));
+                elementGlobal[0] = "}]";
+            }
+            else if (temp.Contains('}'))
+            {
+                temp = temp.Substring(0, temp.IndexOf("}"));
+                elementGlobal[0] = "}";
             }
             if (temp.Contains('\"'))
             {
@@ -56,8 +108,8 @@ namespace ITMO.JSON.MyParser
             {
                 val = (object)temp;
             }
-
-            dictionary.Add(key, val);
+            myPair = new KeyValuePair<string, object>(key, val);
+            return myPair;
         }
 
 
@@ -105,47 +157,5 @@ namespace ITMO.JSON.MyParser
             fulltext = fulltext.Replace("   ", "");
             return fulltext;
         }
-
-        private static void ElementPara(string element, ref string key, ref Object val)
-        {
-
-
-
-        }
-
-        private static bool IfNewElement(string element)
-        {
-            if (element.Contains('{'))
-            {    
-                return true;
-            }            
-            return false;
-        }
-        private static bool IfEndElement(string element)
-        {
-            if (element.Contains('}'))
-            {
-                return true;
-            }
-            return false;
-        }
-        private static bool IfNewInnerElement(string element)
-        {
-            if (element[0] == '[')
-            {
-                return true;
-            }
-            return false;
-        }
-        private static bool IfEndInnerElement(string element)
-        {
-            if (element[element.Length -1] == ']')
-            {
-                return true;
-            }
-            return false;
-        }
-
-
     }
 }
