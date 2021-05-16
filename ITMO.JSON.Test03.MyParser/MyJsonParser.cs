@@ -57,20 +57,20 @@ namespace ITMO.JSON.MyParser
                 {
                     Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
                     while ("}" != elementGlobal[0])
-                    {                                             
+                    {
                         KeyValuePair<string, object> element = ElementPara(elementGlobal);
                         dictionaryInner.Add(element.Key, element.Value);
                         if ("}]" == elementGlobal[0])
-                        {                           
+                        {
                             break;
                         }
-                        else if("}" == elementGlobal[0])
+                        else if ("}" == elementGlobal[0])
                         {
                             elementGlobal.RemoveAt(0);
                             break;
                         }
                         elementGlobal.RemoveAt(0);
-                    } 
+                    }
                     dynamic dynamicObj = new Expando();
                     foreach (var valueDictionary in dictionaryInner)
                     {
@@ -78,12 +78,35 @@ namespace ITMO.JSON.MyParser
                     }
                     listDynamics.Add(dynamicObj);
                     if ("}]" == elementGlobal[0])
-                    {                        
+                    {
                         break;
                     }
-                }                
+                }
                 val = listDynamics;
                 myPair = new KeyValuePair<string, object>(key, val);
+                return myPair;
+            }
+            else if (temp.Contains("{"))
+            {
+                elementGlobal[0] = temp;
+
+                Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
+                while ("}" != elementGlobal[0])
+                {
+                    KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                    dictionaryInner.Add(element.Key, element.Value);                  
+                    else if ("}" == elementGlobal[0])
+                    {                       
+                        break;
+                    }
+                    elementGlobal.RemoveAt(0);
+                }
+                dynamic dynamicObj = new Expando();
+                foreach (var valueDictionary in dictionaryInner)
+                {
+                    dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
+                }
+                myPair = new KeyValuePair<string, object>(key, dynamicObj);
                 return myPair;
             }
             else if (temp.Contains("}]"))
