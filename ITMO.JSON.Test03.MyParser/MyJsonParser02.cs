@@ -90,24 +90,7 @@ namespace ITMO.JSON.MyParser
             }
             else if (temp.Contains("{"))
             {
-                elementGlobal[0] = temp;
-
-                Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
-                while ("}" != elementGlobal[0])
-                {
-                    KeyValuePair<string, object> element = ElementPara();
-                    dictionaryInner.Add(element.Key, element.Value);
-                    if ("}" == elementGlobal[0])
-                    {
-                        break;
-                    }
-                    elementGlobal.RemoveAt(0);
-                }
-                dynamic dynamicObj = new Expando();
-                foreach (var valueDictionary in dictionaryInner)
-                {
-                    dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
-                }
+                dynamic dynamicObj =  ToPersonalType(temp); 
                 myPair = new KeyValuePair<string, object>(key, dynamicObj);
                 return myPair;
             }
@@ -131,6 +114,27 @@ namespace ITMO.JSON.MyParser
             myPair = new KeyValuePair<string, object>(key, val);
             return myPair;
         }
+        private static Object ToPersonalType(string str)
+        {           
+            elementGlobal[0] = str;
+            Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
+            while ("}" != elementGlobal[0])
+            {
+                KeyValuePair<string, object> element = ElementPara();
+                dictionaryInner.Add(element.Key, element.Value);
+                if ("}" == elementGlobal[0])
+                {
+                    break;
+                }
+                elementGlobal.RemoveAt(0);
+            }
+            dynamic dynamicObj = new Expando();
+            foreach (var valueDictionary in dictionaryInner)
+            {
+                dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
+            } 
+            return dynamicObj;
+        }
 
         private static Object ToObjectSTR(string str)
         {
@@ -153,11 +157,7 @@ namespace ITMO.JSON.MyParser
                 val = (object)str;
             }
             return val;
-        }
-
-
-
-    
+        }   
 
 
         private static string ReadFile(string namefile)
