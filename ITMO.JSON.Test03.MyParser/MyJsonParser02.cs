@@ -7,20 +7,24 @@ using System.IO;
 
 namespace ITMO.JSON.MyParser
 {
-    public static class MyJsonParser
+    public static class MyJsonParser02
     {
+        private static string fulltext;
+        private static List<string> elementGlobal;
+
+
         public static List<dynamic> JsonParser(string namefile)
         {
-            string fulltext = ReadFile(namefile);
-            fulltext = DeleteSpace(fulltext);
-            List<string> elementGlobal = Parse(fulltext);
+            fulltext = ReadFile(namefile);
+            DeleteSpace();
+            elementGlobal = Parse();
 
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             List<dynamic> listDynamic = new List<dynamic>();
 
             while (elementGlobal.Count > 0)
             {
-                KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                KeyValuePair<string, object> element = ElementPara();
                 dictionary.Add(element.Key, element.Value);
                 if ("}]" == elementGlobal[0])
                 {
@@ -36,7 +40,8 @@ namespace ITMO.JSON.MyParser
             }
             return listDynamic;
         }
-        private static KeyValuePair<string, object> ElementPara(List<string> elementGlobal)
+
+        private static KeyValuePair<string, object> ElementPara()
         {
             string temp = "";
             Object val;
@@ -55,7 +60,7 @@ namespace ITMO.JSON.MyParser
                     Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
                     while ("}" != elementGlobal[0])
                     {
-                        KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                        KeyValuePair<string, object> element = ElementPara();
                         dictionaryInner.Add(element.Key, element.Value);
                         if ("}]" == elementGlobal[0])
                         {
@@ -90,7 +95,7 @@ namespace ITMO.JSON.MyParser
                 Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
                 while ("}" != elementGlobal[0])
                 {
-                    KeyValuePair<string, object> element = ElementPara(elementGlobal);
+                    KeyValuePair<string, object> element = ElementPara();
                     dictionaryInner.Add(element.Key, element.Value);
                     if ("}" == elementGlobal[0])
                     {
@@ -138,17 +143,7 @@ namespace ITMO.JSON.MyParser
 
 
 
-        public static Expando JsonParserElement(string elementGlobal)
-        {
-
-            dynamic obj = new Expando()
-            {
-                { "foo", "hello" },
-                { "bar", 42 },
-                { "baz", new object() }
-            };
-            return obj;
-        }
+    
 
 
         private static string ReadFile(string namefile)
@@ -162,18 +157,34 @@ namespace ITMO.JSON.MyParser
             return fulltext;
         }
 
-        private static List<string> Parse(string fulltext)
+        private static List<string> Parse()
         {
             string[] separator = { "," };
             string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             List<string> list = new List<string>();
+            string tempAdd="";
             foreach (var i in elementGlobal)
-                list.Add(i);
+            {
+                //if (i[i.Length - 1] != '}')
+                //{
+                //    tempAdd += i;
+                    list.Add(i);
+                //    tempAdd = "";
+                //}
+                //else
+                //{
+                //    tempAdd += i;
+                //}
+                
+                
+            }
+               
 
             return list;
         }
-        private static string DeleteSpace(string fulltext)
+
+        private static string DeleteSpace()
         {
             fulltext = fulltext.Replace("\n", "");
             fulltext = fulltext.Replace("\r", "");
