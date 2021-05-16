@@ -53,7 +53,7 @@ namespace ITMO.JSON.MyParser
             temp = temp.Remove(0, temp.IndexOf(":") + 2);
             if (temp.Contains('['))
             {                
-                val = ToPersonalType(temp);
+                val = ToListType(temp);
                 myPair = new KeyValuePair<string, object>(key, val);
                 return myPair;
             }
@@ -123,8 +123,7 @@ namespace ITMO.JSON.MyParser
             Object val;
             val = str;
             int resInt;
-            double resDouble;
-            bool isInt = Int32.TryParse(str, out res);
+            double resDouble;           
 
             if (str.Contains('\"'))
             {
