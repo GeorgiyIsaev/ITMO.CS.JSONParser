@@ -8,19 +8,19 @@ using System.IO;
 namespace ITMO.JSON.MyParser
 {
     public static class MyJsonParser
-    {      
+    {
         public static List<dynamic> JsonParser(string namefile)
-        {      
+        {
             string fulltext = ReadFile(namefile);
             fulltext = DeleteSpace(fulltext);
             List<string> elementGlobal = Parse(fulltext);
 
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             List<dynamic> listDynamic = new List<dynamic>();
-          
+
             while (elementGlobal.Count > 0)
-            {              
-                KeyValuePair<string, object> element = ElementPara(elementGlobal);                
+            {
+                KeyValuePair<string, object> element = ElementPara(elementGlobal);
                 dictionary.Add(element.Key, element.Value);
                 if ("}]" == elementGlobal[0])
                 {
@@ -29,11 +29,11 @@ namespace ITMO.JSON.MyParser
                     {
                         dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
                     }
-                    listDynamic.Add(dynamicObj);                   
+                    listDynamic.Add(dynamicObj);
                     dictionary = new Dictionary<string, object>();
-                }              
+                }
                 elementGlobal.RemoveAt(0);
-            }                       
+            }
             return listDynamic;
         }
         private static KeyValuePair<string, object> ElementPara(List<string> elementGlobal)
@@ -91,9 +91,9 @@ namespace ITMO.JSON.MyParser
                 while ("}" != elementGlobal[0])
                 {
                     KeyValuePair<string, object> element = ElementPara(elementGlobal);
-                    dictionaryInner.Add(element.Key, element.Value);                  
+                    dictionaryInner.Add(element.Key, element.Value);
                     if ("}" == elementGlobal[0])
-                    {                       
+                    {
                         break;
                     }
                     elementGlobal.RemoveAt(0);
@@ -126,7 +126,7 @@ namespace ITMO.JSON.MyParser
                 val = temp.Substring(1, temp.LastIndexOf("\"") - 1); ;
             }
             else if (temp == "true") val = true;
-            else if (temp == "false") val = false;            
+            else if (temp == "false") val = false;
             else
             {
                 val = (object)temp;
@@ -139,14 +139,14 @@ namespace ITMO.JSON.MyParser
 
 
         public static Expando JsonParserElement(string elementGlobal)
-        {                    
-          
+        {
+
             dynamic obj = new Expando()
             {
                 { "foo", "hello" },
                 { "bar", 42 },
                 { "baz", new object() }
-            };        
+            };
             return obj;
         }
 
@@ -163,10 +163,10 @@ namespace ITMO.JSON.MyParser
         }
 
         private static List<string> Parse(string fulltext)
-        {            
-            string[] separator = { ","};
+        {
+            string[] separator = { "," };
             string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-          
+
             List<string> list = new List<string>();
             foreach (var i in elementGlobal)
                 list.Add(i);
