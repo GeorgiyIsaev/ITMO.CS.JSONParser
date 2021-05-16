@@ -126,20 +126,34 @@ namespace ITMO.JSON.MyParser
                 temp = temp.Substring(0, temp.IndexOf("}"));
                 elementGlobal[0] = "}";
             }
-            if (temp.Contains('\"'))
-            {
-                val = temp.Substring(1, temp.LastIndexOf("\"") - 1); ;
-            }
-            else if (temp == "true") val = true;
-            else if (temp == "false") val = false;
-            else
-            {
-                val = (object)temp;
-            }
+
+            val = ToObjectSTR(temp);
             myPair = new KeyValuePair<string, object>(key, val);
             return myPair;
         }
 
+        private static Object ToObjectSTR(string str)
+        {
+            Object val;
+            val = str;
+            int resInt;
+            double resDouble;
+            bool isInt = Int32.TryParse(str, out res);
+
+            if (str.Contains('\"'))
+            {
+                val = str.Substring(1, str.LastIndexOf("\"") - 1); ;
+            }
+            else if (str == "true") val = true;
+            else if (str == "false") val = false;
+            else if (Int32.TryParse(str, out resInt)) val = resInt;
+            else if (Double.TryParse(str, out resDouble)) val = resDouble;
+            else
+            {
+                val = (object)str;
+            }
+            return val;
+        }
 
 
 
