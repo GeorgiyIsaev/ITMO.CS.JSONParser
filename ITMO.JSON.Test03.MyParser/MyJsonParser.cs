@@ -24,25 +24,19 @@ namespace ITMO.JSON.MyParser
             while (elementGlobal.Count > 0)
             {              
                 KeyValuePair<string, object> element = ElementPara(elementGlobal);                
-                if (dictionary.ContainsKey(element.Key))
+                if ("}]" == elementGlobal[0])
                 {
                     dynamic dynamicObj = new Expando();
                     foreach (var valueDictionary in dictionary)
                     {
                         dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
                     }
-                    listDynamic.Add(dynamicObj);
-                    Console.WriteLine(dynamicObj.ToString());
+                    listDynamic.Add(dynamicObj);                   
                     dictionary = new Dictionary<string, object>();
                 }
                 dictionary.Add(element.Key, element.Value);
-                if(elementGlobal.Count > 0)
-                    elementGlobal.RemoveAt(0);
-            }
-            foreach (var val in dictionary)
-            {
-                Console.WriteLine(val.Key + " - " + val.Value);
-            }            
+                elementGlobal.RemoveAt(0);
+            }                       
             return listDynamic;
         }
         private static KeyValuePair<string, object> ElementPara(List<string> elementGlobal)
@@ -84,8 +78,7 @@ namespace ITMO.JSON.MyParser
                     }
                     listDynamics.Add(dynamicObj);
                     if ("}]" == elementGlobal[0])
-                    {
-                        elementGlobal.RemoveAt(0);
+                    {                        
                         break;
                     }
                 }                
