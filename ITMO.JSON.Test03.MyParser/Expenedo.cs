@@ -50,20 +50,40 @@ namespace ITMO.JSON.MyParser
                 _properties[key] = value;
             }
         }
+
+
+        private static int countTab = 0;
+
+        private static string Tab
+        {
+            get
+            {
+                string temp = "";
+                int count = 0;
+                while (count < countTab)
+                {
+                    count++;
+                    temp += "   ";
+                }
+                return temp;
+            }
+        }
         public override string ToString()
         {
             string temp = "";
             foreach (var val in _properties)
             {               
                 
-                temp += $"[{val.Key} : ";
+                temp += $"{Tab}[{val.Key} : ";
                 if (val.Value.GetType().ToString() == typeof(List<dynamic>).ToString())
                 {
+                    countTab++;
                     temp += $"\n";
                     foreach (var value in (List<dynamic>)val.Value)
                     {
-                        temp += $"[[{value.ToString()}]],";
+                        temp += $"-{value.ToString()}";
                     }
+                    countTab--;
                 }                
                 else
                     temp += $"{val.Value.ToString()}]\n";
