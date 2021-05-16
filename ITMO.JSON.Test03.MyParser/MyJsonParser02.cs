@@ -52,39 +52,8 @@ namespace ITMO.JSON.MyParser
             string key = temp.Substring(0, temp.IndexOf("\""));
             temp = temp.Remove(0, temp.IndexOf(":") + 2);
             if (temp.Contains('['))
-            {
-                elementGlobal[0] = temp;
-                List<dynamic> listDynamics = new List<dynamic>();
-                while ("}]" != elementGlobal[0])
-                {
-                    Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
-                    while ("}" != elementGlobal[0])
-                    {
-                        KeyValuePair<string, object> element = ElementPara();
-                        dictionaryInner.Add(element.Key, element.Value);
-                        if ("}]" == elementGlobal[0])
-                        {
-                            break;
-                        }
-                        else if ("}" == elementGlobal[0])
-                        {
-                            elementGlobal.RemoveAt(0);
-                            break;
-                        }
-                        elementGlobal.RemoveAt(0);
-                    }
-                    dynamic dynamicObj = new Expando();
-                    foreach (var valueDictionary in dictionaryInner)
-                    {
-                        dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
-                    }
-                    listDynamics.Add(dynamicObj);
-                    if ("}]" == elementGlobal[0])
-                    {
-                        break;
-                    }
-                }
-                val = listDynamics;
+            {                
+                val = ToPersonalType(temp);
                 myPair = new KeyValuePair<string, object>(key, val);
                 return myPair;
             }
@@ -94,16 +63,11 @@ namespace ITMO.JSON.MyParser
                 myPair = new KeyValuePair<string, object>(key, dynamicObj);
                 return myPair;
             }
-            else if (temp.Contains("}]"))
+            else if (temp.Contains("}]") || temp.Contains("} ]"))
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
                 elementGlobal[0] = "}]";
-            }
-            else if (temp.Contains("} ]"))
-            {
-                temp = temp.Substring(0, temp.IndexOf("}"));
-                elementGlobal[0] = "}]";
-            }
+            }         
             else if (temp.Contains('}'))
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
@@ -114,6 +78,24 @@ namespace ITMO.JSON.MyParser
             myPair = new KeyValuePair<string, object>(key, val);
             return myPair;
         }
+        private static Object ToListType(string str)
+        {
+            elementGlobal[0] = str;
+            List<dynamic> listDynamics = new List<dynamic>();
+            while ("}]" != elementGlobal[0])
+            {
+                dynamic dynamicObj = ToPersonalType(str);                             
+                listDynamics.Add(dynamicObj);
+                if ("}]" == elementGlobal[0])
+                {
+                    break;
+                }
+                elementGlobal.RemoveAt(0);
+            }                    
+            return listDynamics;
+        }
+
+
         private static Object ToPersonalType(string str)
         {           
             elementGlobal[0] = str;
@@ -122,7 +104,7 @@ namespace ITMO.JSON.MyParser
             {
                 KeyValuePair<string, object> element = ElementPara();
                 dictionaryInner.Add(element.Key, element.Value);
-                if ("}" == elementGlobal[0])
+                if ("}" == elementGlobal[0] || "}]" == elementGlobal[0])
                 {
                     break;
                 }
