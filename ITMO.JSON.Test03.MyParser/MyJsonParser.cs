@@ -120,14 +120,18 @@ namespace ITMO.JSON.MyParser
 
         private static Object ToObjectSTR(string str)
         {
-            Object val;
-            val = str;
+            Object val;          
             int resInt;
-            double resDouble;           
+            double resDouble;  
+            if(str[0] == ' ')
+            {
+                str = str.Substring(1); 
+            }
+
 
             if (str.Contains('\"'))
             {
-                val = str.Substring(1, str.LastIndexOf("\"") - 1); ;
+                val = str.Substring(str.IndexOf("\""), str.LastIndexOf("\"") - 1); ;
             }
             else if (str == "true") val = true;
             else if (str == "false") val = false;
