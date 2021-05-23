@@ -183,9 +183,16 @@ namespace ITMO.JSON.MyParser
 
         private static string DeleteSpace()
         {
+            fulltext = fulltext.Replace("  ", "");
             fulltext = fulltext.Replace("\n", "");
             fulltext = fulltext.Replace("\r", "");
+            fulltext = fulltext.Replace("\t", "");
             fulltext = fulltext.Replace("   ", "");
+
+            using (var file = new StreamWriter("TestDeleteSpace.json", false, Encoding.UTF8))
+            {
+                file.WriteLine(fulltext);
+            }
             return fulltext;
         }
     }

@@ -11,7 +11,7 @@ namespace ITMO.JSON.MyParser
     class Program
     {
         static void Main(string[] args)
-        {
+        {            
             List<dynamic> list = MyJsonParser.JsonParser("test.json");
 
             int i = 0;
