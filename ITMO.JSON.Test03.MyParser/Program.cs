@@ -22,18 +22,24 @@ namespace ITMO.JSON.MyParser
                 Console.WriteLine($"{val}");
             }
             Console.ReadKey();
+            MyTest();
 
         }
         static void MyTest()
         {
             dynamic obj = new Expando()
             {
-                { "foo", "hello" },
-                { "bar", 42 },
-                { "baz", new object() }
+                { "clovo", "hello" },
+                { "chislo", 42 },
+                { "obect", new object() }
             };
-            int value = obj.bar;
+            int value = obj.chislo;
+            obj.chislo = 22;
             Console.WriteLine(value);
+            Console.WriteLine(obj.clovo + " " + obj.chislo);        
+            obj.Add("ifelse", true);
+            if(obj.ifelse)
+                Console.WriteLine("obj.ifelse = " + obj.ifelse);        
         }
 
     }   

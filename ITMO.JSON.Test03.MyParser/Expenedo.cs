@@ -53,7 +53,6 @@ namespace ITMO.JSON.MyParser
 
 
         private static int countTab = 0;
-
         private static string Tab
         {
             get
