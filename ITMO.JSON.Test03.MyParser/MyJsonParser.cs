@@ -153,31 +153,32 @@ namespace ITMO.JSON.MyParser
         }
 
         private static List<string> Parse()
-        {
-            string[] separator = { "," };
-            string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-
+        {            
             List<string> list = new List<string>();
-            
 
-            string tempAdd="";
-            foreach (var i in elementGlobal)
+            string tempFullText = fulltext;
+            string tempfragment;
+            while (true)
             {
-                //if (i[i.Length - 1] != '}')
-                //{
-                //    tempAdd += i;
-                    list.Add(i);
-                //    tempAdd = "";
-                //}
-                //else
-                //{
-                //    tempAdd += i;
-                //}
-                
-                
-            }
-               
-
+                int splitFragment1 = tempFullText.IndexOf(",\"");
+                int splitFragment2 = tempFullText.IndexOf("},{");
+                if ((splitFragment1 == -1) && (splitFragment2 == -1))
+                {
+                    list.Add(tempFullText);
+                    break;
+                }
+                else if ((splitFragment1 < splitFragment2) || (splitFragment1 != -1) && (splitFragment2 == -1))
+                {
+                    tempfragment = tempFullText.Substring(0, tempFullText.IndexOf(",\""));
+                    tempFullText = tempFullText.Remove(0, splitFragment1 + 1);
+                }
+                else 
+                {
+                    tempfragment = tempFullText.Substring(0, tempFullText.IndexOf("},{")+1);
+                    tempFullText = tempFullText.Remove(0, splitFragment2+2);
+                }         
+                list.Add(tempfragment);            
+            }  
             return list;
         }
 
