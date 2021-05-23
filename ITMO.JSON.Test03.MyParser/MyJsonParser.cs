@@ -187,8 +187,7 @@ namespace ITMO.JSON.MyParser
             fulltext = fulltext.Replace("  ", "");
             fulltext = fulltext.Replace("\n", "");
             fulltext = fulltext.Replace("\r", "");
-            fulltext = fulltext.Replace("\t", "");
-            fulltext = fulltext.Replace("   ", "");
+          
 
             using (var file = new StreamWriter("TestDeleteSpace.json", false, Encoding.UTF8))
             {
