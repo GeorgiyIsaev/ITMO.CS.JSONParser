@@ -47,10 +47,10 @@ namespace ITMO.JSON.MyParser
             Object val;
             KeyValuePair<string, object> myPair;
 
-
             temp = elementGlobal[0].Remove(0, elementGlobal[0].IndexOf("\"") + 1);
             string key = temp.Substring(0, temp.IndexOf("\""));
             temp = temp.Remove(0, temp.IndexOf(":") + 2);
+
             if (temp.Contains('['))
             {                
                 val = ToListType(temp);
@@ -78,6 +78,7 @@ namespace ITMO.JSON.MyParser
             myPair = new KeyValuePair<string, object>(key, val);
             return myPair;
         }
+
         private static Object ToListType(string str)
         {
             elementGlobal[0] = str;
@@ -94,7 +95,6 @@ namespace ITMO.JSON.MyParser
             }                    
             return listDynamics;
         }
-
 
         private static Object ToPersonalType(string str)
         {           
