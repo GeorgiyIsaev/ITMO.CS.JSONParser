@@ -12,7 +12,7 @@ namespace ITMO.JSON.MyParser
     {
         static void Main(string[] args)
         {            
-            List<dynamic> list = MyJsonParser.JsonParser("test1.json");
+            List<dynamic> list = MyJsonParser.JsonParser("test.json");
 
             int i = 0;
             Console.WriteLine($"Мои элементы:");
