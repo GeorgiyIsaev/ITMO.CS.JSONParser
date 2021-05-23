@@ -52,14 +52,14 @@ namespace ITMO.JSON.MyParser
             temp = temp.Remove(0, temp.IndexOf(":") + 2);
 
             if (temp.Contains('['))
-            {                
+            {
                 val = ToListType(temp);
                 myPair = new KeyValuePair<string, object>(key, val);
                 return myPair;
             }
             else if (temp.Contains("{"))
             {
-                dynamic dynamicObj =  ToPersonalType(temp); 
+                dynamic dynamicObj = ToPersonalType(temp);
                 myPair = new KeyValuePair<string, object>(key, dynamicObj);
                 return myPair;
             }
@@ -67,7 +67,7 @@ namespace ITMO.JSON.MyParser
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
                 elementGlobal[0] = "}]";
-            }         
+            }
             else if (temp.Contains('}'))
             {
                 temp = temp.Substring(0, temp.IndexOf("}"));
@@ -85,19 +85,19 @@ namespace ITMO.JSON.MyParser
             List<dynamic> listDynamics = new List<dynamic>();
             while ("}]" != elementGlobal[0])
             {
-                dynamic dynamicObj = ToPersonalType(str);                             
+                dynamic dynamicObj = ToPersonalType(str);
                 listDynamics.Add(dynamicObj);
                 if ("}]" == elementGlobal[0])
                 {
                     break;
                 }
                 elementGlobal.RemoveAt(0);
-            }                    
+            }
             return listDynamics;
         }
 
         private static Object ToPersonalType(string str)
-        {           
+        {
             elementGlobal[0] = str;
             Dictionary<string, object> dictionaryInner = new Dictionary<string, object>();
             while ("}" != elementGlobal[0])
@@ -114,7 +114,7 @@ namespace ITMO.JSON.MyParser
             foreach (var valueDictionary in dictionaryInner)
             {
                 dynamicObj.Add(valueDictionary.Key, valueDictionary.Value);
-            } 
+            }
             return dynamicObj;
         }
 
@@ -123,7 +123,7 @@ namespace ITMO.JSON.MyParser
             Object val;
             val = str;
             int resInt;
-            double resDouble;           
+            double resDouble;
 
             if (str.Contains('\"'))
             {
@@ -138,7 +138,7 @@ namespace ITMO.JSON.MyParser
                 val = (object)str;
             }
             return val;
-        }   
+        }
 
 
         private static string ReadFile(string namefile)
@@ -154,37 +154,47 @@ namespace ITMO.JSON.MyParser
 
         private static List<string> Parse()
         {
-            string[] separator = { "," };
-            string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-
             List<string> list = new List<string>();
-            string tempAdd="";
-            foreach (var i in elementGlobal)
-            {
-                //if (i[i.Length - 1] != '}')
-                //{
-                //    tempAdd += i;
-                    list.Add(i);
-                //    tempAdd = "";
-                //}
-                //else
-                //{
-                //    tempAdd += i;
-                //}
-                
-                
-            }
-               
 
+            string tempFullText = fulltext;
+            string tempfragment;
+            while (true)
+            {
+                int splitFragment1 = tempFullText.IndexOf(",\"");
+                int splitFragment2 = tempFullText.IndexOf("},{");
+                if ((splitFragment1 == -1) && (splitFragment2 == -1))
+                {
+                    list.Add(tempFullText);
+                    break;
+                }
+                else if ((splitFragment1 < splitFragment2) || (splitFragment1 != -1) && (splitFragment2 == -1))
+                {
+                    tempfragment = tempFullText.Substring(0, tempFullText.IndexOf(",\""));
+                    tempFullText = tempFullText.Remove(0, splitFragment1 + 1);
+                }
+                else
+                {
+                    tempfragment = tempFullText.Substring(0, tempFullText.IndexOf("},{") + 1);
+                    tempFullText = tempFullText.Remove(0, splitFragment2 + 2);
+                }
+                list.Add(tempfragment);
+            }
             return list;
         }
 
         private static string DeleteSpace()
         {
+            fulltext = fulltext.Replace("  ", "");
             fulltext = fulltext.Replace("\n", "");
             fulltext = fulltext.Replace("\r", "");
-            fulltext = fulltext.Replace("   ", "");
+
+
+            using (var file = new StreamWriter("TestDeleteSpace.json", false, Encoding.UTF8))
+            {
+                file.WriteLine(fulltext);
+            }
             return fulltext;
         }
     }
+}
 }
