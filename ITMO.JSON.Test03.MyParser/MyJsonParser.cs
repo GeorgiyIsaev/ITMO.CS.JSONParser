@@ -49,7 +49,7 @@ namespace ITMO.JSON.MyParser
 
             temp = elementGlobal[0].Remove(0, elementGlobal[0].IndexOf("\"") + 1);
             string key = temp.Substring(0, temp.IndexOf("\""));
-            temp = temp.Remove(0, temp.IndexOf(":") + 2);
+            temp = temp.Remove(0, temp.IndexOf(":") + 1);
 
             if (temp.Contains('['))
             {                
