@@ -128,7 +128,6 @@ namespace ITMO.JSON.MyParser
                 str = str.Substring(1); 
             }
 
-
             if (str.Contains('\"'))
             {
                 val = str.Substring(str.IndexOf("\""), str.LastIndexOf("\"") - 1); ;
@@ -190,13 +189,7 @@ namespace ITMO.JSON.MyParser
         {
             fulltext = fulltext.Replace("  ", "");
             fulltext = fulltext.Replace("\n", "");
-            fulltext = fulltext.Replace("\r", "");
-          
-
-            using (var file = new StreamWriter("TestDeleteSpace.json", false, Encoding.UTF8))
-            {
-                file.WriteLine(fulltext);
-            }
+            fulltext = fulltext.Replace("\r", "");          
             return fulltext;
         }
     }

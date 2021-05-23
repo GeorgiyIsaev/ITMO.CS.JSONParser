@@ -22,10 +22,10 @@ namespace ITMO.JSON.MyParser
                 Console.WriteLine($"{val}");
             }
             Console.ReadKey();
-            MyTest();
 
+            //MyTestExpando();
         }
-        static void MyTest()
+        static void MyTestExpando()
         {
             dynamic obj = new Expando()
             {
@@ -41,6 +41,5 @@ namespace ITMO.JSON.MyParser
             if(obj.ifelse)
                 Console.WriteLine("obj.ifelse = " + obj.ifelse);        
         }
-
     }   
 }

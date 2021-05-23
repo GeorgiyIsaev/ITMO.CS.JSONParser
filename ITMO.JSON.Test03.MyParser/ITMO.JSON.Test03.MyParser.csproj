@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Expenedo.cs" />
-    <Compile Include="MyJsonParserCopy.cs" />
     <Compile Include="MyJsonParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
