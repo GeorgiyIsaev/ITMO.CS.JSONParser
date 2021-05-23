@@ -39,8 +39,8 @@ namespace CheckList
             /*Условием зададим проверку о существовании файла*/
             var options = new JsonSerializerOptions
             {
-                WriteIndented = true, // Если равно true устанавливаются дополнительные пробелы и переносы (для красоты)
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) //Вот эта строка Вам поможет с кодировкой              
+               // WriteIndented = true, // Если равно true устанавливаются дополнительные пробелы и переносы (для красоты)
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All) //Вот эта строка поможет с кодировкой              
             };
             if (File.Exists("test.json"))
             {

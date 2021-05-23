@@ -158,6 +158,8 @@ namespace ITMO.JSON.MyParser
             string[] elementGlobal = fulltext.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             List<string> list = new List<string>();
+            
+
             string tempAdd="";
             foreach (var i in elementGlobal)
             {
